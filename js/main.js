@@ -226,8 +226,7 @@ let compareRooms = function () {
     if ((paramRoom !== 100) && (paramCapacity === 0)) {
       roomNumber.setCustomValidity(`Выберите 100 комнат`);
       roomNumber.reportValidity();
-    }
-    else {
+    } else {
       if ((paramRoom === 100) && (paramCapacity === 0)) {
         capacity.setCustomValidity(``);
         roomNumber.setCustomValidity(``);
