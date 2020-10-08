@@ -185,7 +185,6 @@ let closeCard = function (element) {
 let clickPin = function () {
   let pinElements = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
 
-  console.log(pinElements);
   for (let i = 0; i < pinElements.length; i++) {
     pinElements[i].addEventListener(`click`, function () {
       for (let j = 0; j < pinElements.length; j++) {
@@ -240,14 +239,54 @@ addressInput[0].value = PIN_WIDTH / 2 + Number(pinMain.style.left.slice(0, -2)) 
 pinMain.addEventListener(`mousedown`, function (evt) {
   if (evt.button === 0) {
     disabledForm();
+    addressInput[0].value = PIN_WIDTH / 2 + Number(pinMain.style.left.slice(0, -2)) + `, ` + (PIN_HEIGHT + Number(pinMain.style.top.slice(0, -2)));
   }
 });
 
 pinMain.addEventListener(`keydown`, function (evt) {
   if (evt.key === `Enter`) {
     disabledForm();
+    addressInput[0].value = PIN_WIDTH / 2 + Number(pinMain.style.left.slice(0, -2)) + `, ` + (PIN_HEIGHT + Number(pinMain.style.top.slice(0, -2)));
   }
 });
+
+pinMain.onmousedown = function (event) {
+
+  let shiftX = event.clientX - pinMain.getBoundingClientRect().left;
+  let shiftY = event.clientY - pinMain.getBoundingClientRect().top;
+
+  pinMain.style.position = `absolute`;
+  pinMain.style.zIndex = 1000;
+  document.body.append(pinMain);
+
+  moveAt(event.pageX, event.pageY);
+
+  function moveAt(pageX, pageY) {
+    if (pageX < 230 || pageX > 1450 || pageY < 130 || pageY > 530) {
+      pinMain.onmouseup();
+    }
+    pinMain.style.left = pageX - shiftX + `px`;
+    pinMain.style.top = pageY - shiftY + `px`;
+    addressInput[0].value = Math.round(PIN_WIDTH / 2 + Number(pinMain.style.left.slice(0, -2))) + `, ` + Math.round(PIN_HEIGHT + Number(pinMain.style.top.slice(0, -2)));
+  }
+
+  function onMouseMove(ev) {
+    moveAt(ev.pageX, ev.pageY);
+  }
+
+  document.addEventListener(`mousemove`, onMouseMove);
+
+  pinMain.onmouseup = function () {
+    document.removeEventListener(`mousemove`, onMouseMove);
+    pinMain.onmouseup = null;
+  };
+
+};
+
+pinMain.ondragstart = function () {
+  return false;
+};
+
 
 let roomNumber = document.getElementById(`room_number`);
 let capacity = document.getElementById(`capacity`);
@@ -325,5 +364,4 @@ type.addEventListener(`change`, function () {
 });
 
 
-addressInput[0].value = PIN_WIDTH / 2 + Number(pinMain.style.left.slice(0, -2)) + `, ` + (PIN_HEIGHT + Number(pinMain.style.top.slice(0, -2)));
 compareRooms();
