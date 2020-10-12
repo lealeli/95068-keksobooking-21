@@ -24,23 +24,24 @@
     },
 
     eventClickPin(pinElements, adverts) {
-      for (let i = 0; i < pinElements.length; i++) {
-        pinElements[i].addEventListener(`click`, function () {
-          for (let j = 0; j < pinElements.length; j++) {
-            if (i === j) {
-              pinElements[j].classList.add(`.map__pin--active`);
-            } else {
-              pinElements[j].classList.remove(`.map__pin--active`);
-            }
+      pinElements.forEach((elementI, i) => elementI.addEventListener(`click`, function () {
+        pinElements.forEach((elementJ, j) => {
+          if (i === j) {
+            elementJ.classList.add(`.map__pin--active`);
+          } else {
+            elementJ.classList.remove(`.map__pin--active`);
           }
-          let popupOpening = document.querySelector(`.map__card`);
-          if (popupOpening) {
-            popupOpening.remove();
-          }
-          window.card.activationCard(adverts[i]);
-          window.card.closeCard(document.querySelector(`.map__card`));
         });
-      }
+
+        let popupOpening = document.querySelector(`.map__card`);
+        if (popupOpening) {
+          popupOpening.remove();
+        }
+        window.card.activationCard(adverts[i]);
+        window.card.closeCard(document.querySelector(`.map__card`));
+      })
+      );
+
     }
   };
 })();
