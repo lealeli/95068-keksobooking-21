@@ -24,7 +24,6 @@
     },
 
     eventClickPin(pinElements, adverts) {
-      console.log(pinElements, adverts);
       for (let i = 0; i < pinElements.length; i++) {
         pinElements[i].addEventListener(`click`, function () {
           for (let j = 0; j < pinElements.length; j++) {
