@@ -54,18 +54,35 @@
     let shiftX = event.clientX - pinMain.getBoundingClientRect().left;
     let shiftY = event.clientY - pinMain.getBoundingClientRect().top;
 
-    pinMain.style.position = `absolute`;
-    pinMain.style.zIndex = 1000;
     document.body.append(pinMain);
 
     moveAt(event.pageX, event.pageY);
 
     function moveAt(pageX, pageY) {
-      if (pageX < 230 || pageX > 1450 || pageY < 130 || pageY > 530) {
-        pinMain.onmouseup();
-      }
-      pinMain.style.left = pageX - shiftX + `px`;
+      const BODY_WIDHT = 1200;
+      let viewWidht = document.documentElement.clientWidth;
+      let beginX = (viewWidht - BODY_WIDHT) / 2;
+      let endX = viewWidht - (viewWidht - BODY_WIDHT) / 2 - pinMain.getBoundingClientRect().width;
+
       pinMain.style.top = pageY - shiftY + `px`;
+      pinMain.style.left = pageX - shiftX + `px`;
+
+      if (pageX <= beginX) {
+        pinMain.style.left = beginX + `px`;
+      }
+
+      if (pageX >= endX) {
+        pinMain.style.left = endX + `px`;
+      }
+
+      if (pageY <= 130 - pinMain.getBoundingClientRect().height + shiftY) {
+        pinMain.style.top = 130 - pinMain.getBoundingClientRect().height + `px`;
+      }
+
+      if (pageY >= 530 + pinMain.getBoundingClientRect().height - shiftY) {
+        pinMain.style.top = 530 + pinMain.getBoundingClientRect().height + `px`;
+      }
+
       window.formValidation.addressValidationActive(addressInput, pinMain);
     }
 
@@ -75,10 +92,10 @@
 
     document.addEventListener(`mousemove`, onMouseMove);
 
-    pinMain.onmouseup = function () {
+    pinMain.addEventListener(`mouseup`, function () {
       document.removeEventListener(`mousemove`, onMouseMove);
       pinMain.onmouseup = null;
-    };
+    });
 
   };
 
