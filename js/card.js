@@ -37,17 +37,20 @@
 
       if (advert.offer.type) {
         switch (advert.offer.type) {
-          case `palace`:
+          case window.util.HOUSING_TYPE.PALACE:
             cardElement.querySelector(`.popup__type`).innerHTML = `Дворец`;
             break;
-          case `bungalow`:
-            cardElement.querySelector(`.popup__type`).innerHTML = `Дворец`;
+          case window.util.HOUSING_TYPE.BUNGALOW:
+            cardElement.querySelector(`.popup__type`).innerHTML = `Бунгало`;
             break;
-          case `flat`:
+          case window.util.HOUSING_TYPE.FLAT:
             cardElement.querySelector(`.popup__type`).innerHTML = `Квартира`;
             break;
-          default:
+          case window.util.HOUSING_TYPE.HOUSE:
             cardElement.querySelector(`.popup__type`).innerHTML = `Дом`;
+            break;
+          default:
+            window.console.error(`Wrong housing type`);
         }
       } else {
         cardElement.querySelector(`.popup__type`).remove();
