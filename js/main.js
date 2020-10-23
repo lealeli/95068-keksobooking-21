@@ -1,6 +1,17 @@
 'use strict';
 
 (function () {
+
+  // let onError = function (message) {
+  //   window.console.error(message);
+  // };
+  //
+  // let onSuccess = function (data) {
+  //   window.console.log(data);
+  // };
+  //
+  // window.load(`https://21.javascript.pages.academy/keksobooking/data`, onSuccess, onError);
+
   let pinMain = document.querySelector(`.map__pin--main`);
 
   // form validation
