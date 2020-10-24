@@ -6,8 +6,25 @@
   let formDisabled = document.querySelectorAll(`.ad-form--disabled fieldset`);
   let mapFilters = document.querySelector(`.map__filters`).children;
   let addressInput = document.getElementsByName(`address`);
+  let buttonReset = document.querySelector(`.ad-form__reset`);
 
   let pinListElement = document.querySelector(`.map__pins`);
+
+  let formResetState = function () {
+    formDisabled.forEach((element) => element.setAttribute(`disabled`, `disabled`));
+
+    for (let i = 0; i < mapFilters.length; i++) {
+      mapFilters[i].setAttribute(`disabled`, `disabled`);
+    }
+    document.querySelector(`.map`).classList.add(`map--faded`);
+    form.classList.add(`ad-form--disabled`);
+    let pinElements = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+    pinElements.forEach((element) => element.remove());
+    pinListElement.append(pinMain);
+    pinMain.style.left = `570px`;
+    pinMain.style.top = `375px`;
+    window.formValidation.addressValidation(addressInput, pinMain);
+  };
 
   let onError = function (message) {
     let node = document.createElement(`div`);
@@ -22,11 +39,7 @@
   };
 
   let onSuccess = function (adverts) {
-    formDisabled.forEach((element) => element.setAttribute(`disabled`, `disabled`));
-
-    for (let i = 0; i < mapFilters.length; i++) {
-      mapFilters[i].setAttribute(`disabled`, `disabled`);
-    }
+    formResetState();
 
     function unDisabledForm() {
       if (!document.querySelector(`.map--faded`)) {
@@ -116,5 +129,44 @@
   };
 
   window.load(`https://21.javascript.pages.academy/keksobooking/data`, onSuccess, onError);
+
+  let sendForm = function (type) {
+    let errorTemplate = document.querySelector(`#` + type).content.querySelector(`.` + type);
+    let errorElement = errorTemplate.cloneNode(true);
+    let fragment = document.createDocumentFragment();
+
+    fragment.appendChild(errorElement);
+    document.body.appendChild(fragment);
+
+    document.body.addEventListener(`click`, closeMessage(type));
+
+    document.body.addEventListener(`keydown`, function (evt) {
+      window.util.isEscEvent(evt, closeMessage(type));
+    });
+  };
+
+
+  let closeMessage = function (type) {
+    return function () {
+      document.querySelector(`.` + type).remove();
+    };
+  };
+
+  form.addEventListener(`submit`, function (evt) {
+    window.upload(new FormData(form), function () {
+      form.reset();
+      formResetState();
+      sendForm(`success`);
+    }, function () {
+      sendForm(`error`);
+    });
+    evt.preventDefault();
+  });
+
+  buttonReset.addEventListener(`click`, function (event) {
+    form.reset();
+    formResetState();
+    event.preventDefault();
+  });
 
 })();
