@@ -1,7 +1,14 @@
 'use strict';
 
 (function () {
+  const ESC_KEY = `Escape`;
+
   window.util = {
+    isEscEvent(evt, action) {
+      if (evt.key === ESC_KEY) {
+        action();
+      }
+    },
     getRandomInt(min, max) {
       min = Math.ceil(min);
       max = Math.floor(max);
