@@ -8,8 +8,8 @@
     renderCard(advert) {
       let cardElement = cardTemplate.cloneNode(true);
 
-      cardElement.style.left = advert.location.x + `px`;
-      cardElement.style.top = advert.location.y + `px`;
+      cardElement.style.left = 50 + `px`;
+      cardElement.style.top = 100 + `px`;
 
       if (advert.author.avatar) {
         cardElement.querySelector(`.popup__avatar`).src = advert.author.avatar;

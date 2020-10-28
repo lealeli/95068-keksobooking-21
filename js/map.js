@@ -42,19 +42,56 @@
   let onSuccess = function (adverts) {
     formResetState();
 
-    const updatePin = function (housingType) {
+    const updatePin = function (housingType, housingPrice, roomNumber, capacityNumber) {
 
       let pinElements = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
       pinElements.forEach((element) => element.remove());
 
-      let samePins;
-      if (housingType !== window.util.HOUSING_TYPE.ANY) {
-        samePins = adverts.filter(function (advert) {
-          return advert.offer.type === housingType;
-        });
-      } else {
-        samePins = adverts;
-      }
+      let housingFeatures = [];
+
+      document.querySelectorAll(`#housing-features > .map__checkbox`).forEach(function (element) {
+        if (element.checked) {
+          housingFeatures.push(element.value);
+        }
+      });
+
+      let samePins = adverts.filter(function (advert) {
+        if (housingType !== window.util.HOUSING_TYPE.ANY) {
+          if (advert.offer.type !== housingType) {
+            return false;
+          }
+        }
+
+        if (housingPrice !== window.util.HOUSING_PRICE.ANY) {
+          if ((housingPrice === window.util.HOUSING_PRICE.HIGH) && (advert.offer.price < 50000)) {
+            return false;
+          }
+          if ((housingPrice === window.util.HOUSING_PRICE.MIDDLE) && ((advert.offer.price >= 50000) || (advert.offer.price < 10000))) {
+            return false;
+          }
+          if ((housingPrice === window.util.HOUSING_PRICE.LOW) && (advert.offer.price >= 10000)) {
+            return false;
+          }
+        }
+
+        if (roomNumber !== window.util.ROOM_NUMBER.ANY) {
+          if (advert.offer.rooms !== Number(roomNumber)) {
+            return false;
+          }
+        }
+
+        if (capacityNumber !== window.util.ROOM_NUMBER.ANY) {
+          if (advert.offer.guests !== Number(capacityNumber)) {
+            return false;
+          }
+        }
+
+        if (!housingFeatures.every((r) => advert.offer.features.includes(r))) {
+          return false;
+        }
+
+        return true;
+      });
 
       samePins = samePins.slice(0, 5);
 
@@ -74,18 +111,21 @@
       form.classList.remove(`ad-form--disabled`);
       formDisabled.forEach((element) => element.removeAttribute(`disabled`));
 
-      updatePin(window.util.HOUSING_TYPE.ANY);
+      updatePin(window.util.HOUSING_TYPE.ANY, window.util.HOUSING_PRICE.ANY, window.util.ROOM_NUMBER.ANY, window.util.CAPACITY_NUMBER.ANY);
     }
 
-    mapFilters[0].addEventListener(`change`, function () {
-      const pinCard = document.querySelector(`.map__card`);
-      if (pinCard) {
-        pinCard.remove();
-      }
+    for (let i = 0; i < mapFilters.length; i++) {
+      mapFilters[i].addEventListener(`change`, function () {
+        const pinCard = document.querySelector(`.map__card`);
+        if (pinCard) {
+          pinCard.remove();
+        }
 
-      updatePin(mapFilters[0].value);
-    });
-
+        window.util.debounce(function () {
+          updatePin(mapFilters[0].value, mapFilters[1].value, mapFilters[2].value, mapFilters[3].value);
+        });
+      });
+    }
 
     pinMain.addEventListener(`mousedown`, function (evt) {
       if (evt.button === 0) {
