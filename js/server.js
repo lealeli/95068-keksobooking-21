@@ -9,17 +9,17 @@
     xhr.addEventListener(`load`, function () {
       let error;
       switch (xhr.status) {
-        case 200:
+        case window.util.SERVER_ANSWER.SUCCESS:
           onSuccess(xhr.response);
           break;
 
-        case 400:
+        case window.util.SERVER_ANSWER.BAD_REQUEST:
           error = `Неверный запрос`;
           break;
-        case 401:
+        case window.util.SERVER_ANSWER.NOT_AUTHORIZED:
           error = `Пользователь не авторизован`;
           break;
-        case 404:
+        case window.util.SERVER_ANSWER.NOT_FOUND_ERROR:
           error = `Ничего не найдено`;
           break;
 
@@ -40,7 +40,7 @@
       onError(`Запрос не успел выполниться за ` + xhr.timeout + `мс`);
     });
 
-    xhr.timeout = 10000; // 10s
+    xhr.timeout = window.util.SERVER_ANSWER.TIMEOUT_SERVER; // 10s
 
     xhr.open(`GET`, url);
     xhr.send();

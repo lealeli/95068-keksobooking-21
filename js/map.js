@@ -16,6 +16,7 @@
     for (let i = 0; i < mapFilters.length; i++) {
       mapFilters[i].setAttribute(`disabled`, `disabled`);
     }
+
     document.querySelector(`.map`).classList.add(`map--faded`);
     form.classList.add(`ad-form--disabled`);
     let pinElements = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
@@ -41,6 +42,27 @@
   let onSuccess = function (adverts) {
     formResetState();
 
+    const updatePin = function (housingType) {
+
+      let pinElements = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+      pinElements.forEach((element) => element.remove());
+
+      let samePins;
+      if (housingType !== window.util.HOUSING_TYPE.ANY) {
+        samePins = adverts.filter(function (advert) {
+          return advert.offer.type === housingType;
+        });
+      } else {
+        samePins = adverts;
+      }
+
+      samePins = samePins.slice(0, 5);
+
+      let pins = window.pin.appendPin(samePins, pinListElement);
+
+      window.pin.eventClickPin(pins, samePins);
+    };
+
     function unDisabledForm() {
       if (!document.querySelector(`.map--faded`)) {
         return;
@@ -52,11 +74,17 @@
       form.classList.remove(`ad-form--disabled`);
       formDisabled.forEach((element) => element.removeAttribute(`disabled`));
 
-      window.pin.appendPin(adverts, pinListElement);
-
-      let pinElements = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
-      window.pin.eventClickPin(pinElements, adverts);
+      updatePin(window.util.HOUSING_TYPE.ANY);
     }
+
+    mapFilters[0].addEventListener(`change`, function () {
+      const pinCard = document.querySelector(`.map__card`);
+      if (pinCard) {
+        pinCard.remove();
+      }
+
+      updatePin(mapFilters[0].value);
+    });
 
 
     pinMain.addEventListener(`mousedown`, function (evt) {
