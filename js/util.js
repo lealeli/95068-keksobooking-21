@@ -19,7 +19,8 @@
       HOUSE: `house`,
       PALACE: `palace`,
       FLAT: `flat`,
-      BUNGALOW: `bungalow`
+      BUNGALOW: `bungalow`,
+      ANY: `any`
     },
 
     ROOM_NUMBER: {
@@ -34,6 +35,14 @@
       TWO_GUEST: 2,
       THREE_GUEST: 3,
       NOT_GUEST: 0
+    },
+
+    SERVER_ANSWER: {
+      SUCCESS: 200,
+      BAD_REQUEST: 400,
+      NOT_AUTHORIZED: 401,
+      NOT_FOUND_ERROR: 404,
+      TIMEOUT_SERVER: 10000
     }
   };
 })();

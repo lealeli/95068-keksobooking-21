@@ -18,9 +18,16 @@
     },
 
     appendPin(adverts, pinList) {
+      let pinArrays = [];
       let fragment = document.createDocumentFragment();
-      adverts.forEach((element) => fragment.appendChild(window.pin.renderPin(element)));
+      adverts.forEach(function (element) {
+        const pin = window.pin.renderPin(element);
+        fragment.appendChild(pin);
+        pinArrays.push(pin);
+      });
       pinList.appendChild(fragment);
+
+      return pinArrays;
     },
 
     eventClickPin(pinElements, adverts) {

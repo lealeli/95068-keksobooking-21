@@ -8,7 +8,7 @@
     xhr.responseType = `json`;
 
     xhr.addEventListener(`load`, function () {
-      if (xhr.status === 200) {
+      if (xhr.status === window.util.SERVER_ANSWER.SUCCESS) {
         onSuccess();
         return;
       }
@@ -25,7 +25,7 @@
       onError();
     });
 
-    xhr.timeout = 10000; // 10s
+    xhr.timeout = window.util.SERVER_ANSWER.TIMEOUT_SERVER; // 10s
 
     xhr.open(`POST`, URL);
     xhr.send(data);
