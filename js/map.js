@@ -6,13 +6,19 @@ let formDisabled = document.querySelectorAll(`.ad-form--disabled fieldset`);
 let mapFilters = document.querySelector(`.map__filters`).children;
 let addressInput = document.getElementsByName(`address`);
 let buttonReset = document.querySelector(`.ad-form__reset`);
-
 let pinListElement = document.querySelector(`.map__pins`);
+let fileChooserAvatar = document.querySelector(`.ad-form-header__input`);
+let previewAvatar = document.querySelector(`.ad-form-header__preview img`);
+let fileChooserPhoto = document.querySelector(`.ad-form__input`);
+let previewPhoto = document.querySelector(`.ad-form__photo`);
 
 let formResetState = function () {
   if (document.querySelector(`.map__card`)) {
     document.querySelector(`.map__card`).remove();
   }
+
+  previewAvatar.src = `img/muffin-grey.svg`;
+  previewPhoto.querySelectorAll(`img`).forEach((element) => element.remove());
   formDisabled.forEach((element) => element.setAttribute(`disabled`, `disabled`));
 
   for (let i = 0; i < mapFilters.length; i++) {
@@ -197,6 +203,62 @@ let onSuccess = function (adverts) {
     return false;
   };
 };
+
+let avatarPreview = function (fileChooser, preview) {
+  const FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`];
+
+  fileChooser.addEventListener(`change`, function () {
+    let file = fileChooser.files[0];
+    let fileName = file.name.toLowerCase();
+
+    let matches = FILE_TYPES.some(function (it) {
+      return fileName.endsWith(it);
+    });
+
+    if (matches) {
+      let reader = new FileReader();
+
+      reader.addEventListener(`load`, function () {
+        preview.src = reader.result;
+      });
+
+      reader.readAsDataURL(file);
+    }
+  });
+};
+
+avatarPreview(fileChooserAvatar, previewAvatar);
+
+let photoPreview = function (fileChooser, container) {
+  const FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`];
+
+  fileChooser.addEventListener(`change`, function () {
+    let file = fileChooser.files[0];
+    let fileName = file.name.toLowerCase();
+
+    let matches = FILE_TYPES.some(function (it) {
+      return fileName.endsWith(it);
+    });
+
+    if (matches) {
+
+      let img = document.createElement(`img`);
+      img.style.width = `100%`;
+      img.style.height = `auto`;
+
+      let reader = new FileReader();
+
+      reader.addEventListener(`load`, function () {
+        img.src = reader.result;
+      });
+      container.append(img);
+
+      reader.readAsDataURL(file);
+    }
+  });
+};
+
+photoPreview(fileChooserPhoto, previewPhoto);
 
 window.load(`https://21.javascript.pages.academy/keksobooking/data`, onSuccess, onError);
 
