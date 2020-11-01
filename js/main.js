@@ -1,40 +1,36 @@
 'use strict';
 
-(function () {
+let pinMain = document.querySelector(`.map__pin--main`);
 
-  let pinMain = document.querySelector(`.map__pin--main`);
+let addressInput = document.getElementsByName(`address`);
+window.formValidation.addressValidation(addressInput, pinMain);
 
-  // form validation
+let roomNumber = document.getElementById(`room_number`);
+let capacity = document.getElementById(`capacity`);
 
-  let addressInput = document.getElementsByName(`address`);
-  window.formValidation.addressValidation(addressInput, pinMain);
+roomNumber.addEventListener(`change`, function () {
+  window.formValidation.compareRooms(roomNumber, capacity);
+});
 
-  let roomNumber = document.getElementById(`room_number`);
-  let capacity = document.getElementById(`capacity`);
+capacity.addEventListener(`change`, function () {
+  window.formValidation.compareRooms(roomNumber, capacity);
+});
 
-  roomNumber.addEventListener(`change`, function () {
-    window.formValidation.compareRooms(roomNumber, capacity);
-  });
+let timeIn = document.getElementById(`timein`);
+let timeOut = document.getElementById(`timeout`);
 
-  capacity.addEventListener(`change`, function () {
-    window.formValidation.compareRooms(roomNumber, capacity);
-  });
+timeIn.addEventListener(`change`, function () {
+  window.formValidation.timeValidation(timeIn, timeOut);
+});
 
-  let timeIn = document.getElementById(`timein`);
-  let timeOut = document.getElementById(`timeout`);
+timeOut.addEventListener(`change`, function () {
+  window.formValidation.timeValidation(timeOut, timeIn);
+});
 
-  timeIn.addEventListener(`change`, function () {
-    window.formValidation.timeValidation(timeIn, timeOut);
-  });
+let price = document.getElementById(`price`);
+let type = document.getElementById(`type`);
 
-  timeOut.addEventListener(`change`, function () {
-    window.formValidation.timeValidation(timeOut, timeIn);
-  });
+type.addEventListener(`change`, function () {
+  window.formValidation.typeHouseValidation(type, price);
+});
 
-  let price = document.getElementById(`price`);
-  let type = document.getElementById(`type`);
-
-  type.addEventListener(`change`, function () {
-    window.formValidation.typeHouseValidation(type, price);
-  });
-})();
