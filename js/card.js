@@ -1,5 +1,13 @@
 'use strict';
 
+const CARD_LEFT_OFFSET = 50;
+const CARD_TOP_OFFSET = 100;
+const ARRAY_HOME = {
+  HOUSE: `Дом`,
+  PALACE: `Дворец`,
+  FLAT: `Квартира`,
+  BUNGALOW: `Бунгало`,
+};
 const ARRAY_FEATURES = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
 let cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
 
@@ -7,8 +15,8 @@ window.card = {
   renderCard(advert) {
     let cardElement = cardTemplate.cloneNode(true);
 
-    cardElement.style.left = 50 + `px`;
-    cardElement.style.top = 100 + `px`;
+    cardElement.style.left = CARD_LEFT_OFFSET + `px`;
+    cardElement.style.top = CARD_TOP_OFFSET + `px`;
 
     if (advert.author.avatar) {
       cardElement.querySelector(`.popup__avatar`).src = advert.author.avatar;
@@ -37,16 +45,16 @@ window.card = {
     if (advert.offer.type) {
       switch (advert.offer.type) {
         case window.util.HOUSING_TYPE.PALACE:
-          cardElement.querySelector(`.popup__type`).innerHTML = `Дворец`;
+          cardElement.querySelector(`.popup__type`).innerHTML = ARRAY_HOME.PALACE;
           break;
         case window.util.HOUSING_TYPE.BUNGALOW:
-          cardElement.querySelector(`.popup__type`).innerHTML = `Бунгало`;
+          cardElement.querySelector(`.popup__type`).innerHTML = ARRAY_HOME.BUNGALOW;
           break;
         case window.util.HOUSING_TYPE.FLAT:
-          cardElement.querySelector(`.popup__type`).innerHTML = `Квартира`;
+          cardElement.querySelector(`.popup__type`).innerHTML = ARRAY_HOME.FLAT;
           break;
         case window.util.HOUSING_TYPE.HOUSE:
-          cardElement.querySelector(`.popup__type`).innerHTML = `Дом`;
+          cardElement.querySelector(`.popup__type`).innerHTML = ARRAY_HOME.HOUSE;
           break;
         default:
           window.console.error(`Wrong housing type`);
