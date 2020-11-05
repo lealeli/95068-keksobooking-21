@@ -1,5 +1,7 @@
 'use strict';
 
+const PRICE_LEVEL_ONE = 10000;
+const PRICE_LEVEL_TWO = 50000;
 let pinMain = document.querySelector(`.map__pin--main`);
 let form = document.querySelector(`.ad-form`);
 let formDisabled = document.querySelectorAll(`.ad-form--disabled fieldset`);
@@ -71,13 +73,13 @@ let onSuccess = function (adverts) {
       }
 
       if (housingPrice !== window.util.HOUSING_PRICE.ANY) {
-        if ((housingPrice === window.util.HOUSING_PRICE.HIGH) && (advert.offer.price < 50000)) {
+        if ((housingPrice === window.util.HOUSING_PRICE.HIGH) && (advert.offer.price < PRICE_LEVEL_TWO)) {
           return false;
         }
-        if ((housingPrice === window.util.HOUSING_PRICE.MIDDLE) && ((advert.offer.price >= 50000) || (advert.offer.price < 10000))) {
+        if ((housingPrice === window.util.HOUSING_PRICE.MIDDLE) && ((advert.offer.price >= PRICE_LEVEL_TWO) || (advert.offer.price < PRICE_LEVEL_ONE))) {
           return false;
         }
-        if ((housingPrice === window.util.HOUSING_PRICE.LOW) && (advert.offer.price >= 10000)) {
+        if ((housingPrice === window.util.HOUSING_PRICE.LOW) && (advert.offer.price >= PRICE_LEVEL_ONE)) {
           return false;
         }
       }
