@@ -69,10 +69,10 @@ window.formValidation = {
   },
 
   addressValidation(addressInput, pinMain) {
-    addressInput[0].value = Math.round(PIN_WIDTH / 2 + pinMain.offsetLeft) + `, ` + Math.round(PIN_WIDTH / 2 + pinMain.offsetTop;
+    addressInput[0].value = Math.round(PIN_WIDTH / 2 + pinMain.offsetLeft) + `, ` + Math.round(PIN_WIDTH / 2 + pinMain.offsetTop);
   },
 
   addressValidationActive(addressInput, pinMain) {
-    addressInput[0].value = Math.round(PIN_WIDTH / 2 + pinMain.offsetLeft) + `, ` + Math.round(PIN_HEIGHT + pinMain.offsetTop;
+    addressInput[0].value = Math.round(PIN_WIDTH / 2 + pinMain.offsetLeft) + `, ` + Math.round(PIN_HEIGHT + pinMain.offsetTop);
   }
 };
