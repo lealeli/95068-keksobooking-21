@@ -124,5 +124,11 @@ window.card = {
     element.querySelector(`.popup__close`).addEventListener(`click`, function () {
       element.remove();
     });
+
+    document.body.addEventListener(`keydown`, function (evt) {
+      window.util.isEscEvent(evt, function () {
+        element.remove();
+      });
+    });
   }
 };

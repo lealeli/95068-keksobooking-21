@@ -1,5 +1,8 @@
 'use strict';
 
+const PIN_WIDTH = 65;
+const PIN_HEIGHT = 75;
+
 window.formValidation = {
   compareRooms(roomNumber, capacity) {
     let paramRoom = Number(roomNumber.value);
@@ -62,13 +65,10 @@ window.formValidation = {
   },
 
   addressValidation(addressInput, pinMain) {
-    const PIN_WIDTH = 65;
     addressInput[0].value = Math.round(PIN_WIDTH / 2 + Number(pinMain.style.left.slice(0, -2))) + `, ` + Math.round(PIN_WIDTH / 2 + Number(pinMain.style.top.slice(0, -2)));
   },
 
   addressValidationActive(addressInput, pinMain) {
-    const PIN_WIDTH = 65;
-    const PIN_HEIGHT = 75;
     addressInput[0].value = Math.round(PIN_WIDTH / 2 + Number(pinMain.style.left.slice(0, -2))) + `, ` + Math.round(PIN_HEIGHT + Number(pinMain.style.top.slice(0, -2)));
   }
 };

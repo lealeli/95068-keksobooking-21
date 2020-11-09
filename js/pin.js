@@ -43,6 +43,7 @@ window.pin = {
       if (popupOpening) {
         popupOpening.remove();
       }
+
       window.card.activationCard(adverts[i]);
       window.card.closeCard(document.querySelector(`.map__card`));
     })

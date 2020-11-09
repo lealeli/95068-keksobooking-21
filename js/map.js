@@ -2,6 +2,11 @@
 
 const PRICE_LEVEL_ONE = 10000;
 const PRICE_LEVEL_TWO = 50000;
+const BODY_WIDHT = 1200;
+const HEIGHT_BEGIN = 130;
+const HEIGHT_END = 630;
+const PIN_HEIGHT = 75;
+
 let pinMain = document.querySelector(`.map__pin--main`);
 let form = document.querySelector(`.ad-form`);
 let formDisabled = document.querySelectorAll(`.ad-form--disabled fieldset`);
@@ -137,13 +142,6 @@ let onSuccess = function (adverts) {
     });
   }
 
-  pinMain.addEventListener(`mousedown`, function (evt) {
-    if (evt.button === 0) {
-      unDisabledForm();
-      window.formValidation.addressValidationActive(addressInput, pinMain);
-    }
-  });
-
   pinMain.addEventListener(`keydown`, function (evt) {
     if (evt.key === `Enter`) {
       unDisabledForm();
@@ -151,55 +149,70 @@ let onSuccess = function (adverts) {
     }
   });
 
+  let shiftX;
+  let shiftY;
+  let mouseMoveFlag = false;
+
+  function moveAt(pageX, pageY) {
+    let viewWidht = document.documentElement.clientWidth;
+    let beginX = (viewWidht - BODY_WIDHT) / 2;
+    let endX = viewWidht - (viewWidht - BODY_WIDHT) / 2 - pinMain.getBoundingClientRect().width;
+
+    if ((pageX + shiftX <= beginX) || (pageX - shiftX >= endX) || (pageY + shiftY <= HEIGHT_BEGIN) || (pageY - shiftY >= HEIGHT_END)) {
+      mouseMoveFlag = false;
+    }
+
+    if (mouseMoveFlag === false) {
+      return;
+    }
+
+    pinMain.style.top = pageY - shiftY + `px`;
+    pinMain.style.left = pageX - beginX - shiftX + `px`;
+
+    if (pageX <= beginX + shiftX) {
+      pinMain.style.left = `0px`;
+    }
+
+    if (pageX >= endX + shiftX) {
+      pinMain.style.left = endX - beginX + `px`;
+    }
+
+    if (pageY <= HEIGHT_BEGIN + shiftY) {
+      pinMain.style.top = HEIGHT_BEGIN - PIN_HEIGHT + `px`;
+    }
+
+    if (pageY >= HEIGHT_END - shiftY) {
+      pinMain.style.top = HEIGHT_END - PIN_HEIGHT + `px`;
+    }
+
+    window.formValidation.addressValidationActive(addressInput, pinMain);
+  }
+
   pinMain.onmousedown = function (event) {
 
-    let shiftX = event.clientX - pinMain.getBoundingClientRect().left;
-    let shiftY = event.clientY - pinMain.getBoundingClientRect().top;
+    if (event.button !== 0) {
+      return;
+    }
 
-    document.body.append(pinMain);
+    unDisabledForm();
+    mouseMoveFlag = true;
+
+    shiftX = event.clientX - pinMain.getBoundingClientRect().left;
+    shiftY = event.clientY - pinMain.getBoundingClientRect().top;
 
     moveAt(event.pageX, event.pageY);
 
-    function moveAt(pageX, pageY) {
-      const BODY_WIDHT = 1200;
-      let viewWidht = document.documentElement.clientWidth;
-      let beginX = (viewWidht - BODY_WIDHT) / 2;
-      let endX = viewWidht - (viewWidht - BODY_WIDHT) / 2 - pinMain.getBoundingClientRect().width;
-
-      pinMain.style.top = pageY - shiftY + `px`;
-      pinMain.style.left = pageX - shiftX + `px`;
-
-      if (pageX <= beginX) {
-        pinMain.style.left = beginX + `px`;
-      }
-
-      if (pageX >= endX) {
-        pinMain.style.left = endX + `px`;
-      }
-
-      if (pageY <= 130 - pinMain.getBoundingClientRect().height + shiftY) {
-        pinMain.style.top = 130 - pinMain.getBoundingClientRect().height + `px`;
-      }
-
-      if (pageY >= 530 + pinMain.getBoundingClientRect().height - shiftY) {
-        pinMain.style.top = 530 + pinMain.getBoundingClientRect().height + `px`;
-      }
-
-      window.formValidation.addressValidationActive(addressInput, pinMain);
-    }
-
-    function onMouseMove(ev) {
-      moveAt(ev.pageX, ev.pageY);
-    }
-
-    document.addEventListener(`mousemove`, onMouseMove);
-
-    pinMain.addEventListener(`mouseup`, function () {
-      document.removeEventListener(`mousemove`, onMouseMove);
-      pinMain.onmouseup = null;
-    });
-
   };
+
+  function onMouseMove(ev) {
+    moveAt(ev.pageX, ev.pageY);
+  }
+
+  document.addEventListener(`mousemove`, onMouseMove);
+
+  pinMain.addEventListener(`mouseup`, function () {
+    mouseMoveFlag = false;
+  });
 
   pinMain.ondragstart = function () {
     return false;
