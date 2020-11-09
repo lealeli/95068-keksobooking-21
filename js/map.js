@@ -273,7 +273,7 @@ let photoPreview = function (fileChooser, container) {
 
 photoPreview(fileChooserPhoto, previewPhoto);
 
-window.load(`https://21.javascript.pages.academy/keksobooking/data`, onSuccess, onError);
+window.ajax(`https://21.javascript.pages.academy/keksobooking/data`, `GET`, onSuccess, onError);
 
 let sendForm = function (type) {
   let errorTemplate = document.querySelector(`#` + type).content.querySelector(`.` + type);
@@ -307,13 +307,13 @@ let closeMessage = function (type) {
 };
 
 form.addEventListener(`submit`, function (evt) {
-  window.upload(new FormData(form), function () {
+  window.ajax(`https://21.javascript.pages.academy/keksobooking`, `POST`, function () {
     form.reset();
     formResetState();
     sendForm(`success`);
   }, function () {
     sendForm(`error`);
-  });
+  }, new FormData(form));
   evt.preventDefault();
 });
 

@@ -1,6 +1,6 @@
 'use strict';
 
-window.load = function (url, onSuccess, onError) {
+window.ajax = function (url, method, onSuccess, onError, data) {
   let xhr = new XMLHttpRequest();
 
   xhr.responseType = `json`;
@@ -41,7 +41,7 @@ window.load = function (url, onSuccess, onError) {
 
   xhr.timeout = window.util.serverAnswer.TIMEOUT_SERVER; // 10s
 
-  xhr.open(`GET`, url);
-  xhr.send();
+  xhr.open(method, url);
+  xhr.send(data);
 };
 
