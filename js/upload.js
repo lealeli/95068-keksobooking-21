@@ -1,6 +1,6 @@
 'use strict';
 
-const URL_UPLOAD = `https://21.javascript.pages.academy/keksobooking`;
+const URL_UPLOAD = `https://21.javascript.pages.academy/keksobooking123`;
 
 window.upload = function (data, onSuccess, onError) {
   let xhr = new XMLHttpRequest();

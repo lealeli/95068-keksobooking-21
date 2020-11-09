@@ -285,18 +285,27 @@ let sendForm = function (type) {
   fragment.appendChild(errorElement);
   document.body.appendChild(fragment);
 
-  document.body.addEventListener(`click`, closeMessage(type));
+  let clickFn = function () {
+    closeMessage(type);
+    document.body.removeEventListener(`keydown`, keydownFn);
+    document.body.removeEventListener(`click`, clickFn);
+  };
+  document.body.addEventListener(`click`, clickFn);
 
-  document.body.addEventListener(`keydown`, function (evt) {
-    window.util.isEscEvent(evt, closeMessage(type));
-  });
+  let keydownFn = function (evt) {
+    window.util.isEscEvent(evt, function () {
+      closeMessage(type);
+      document.body.removeEventListener(`keydown`, keydownFn);
+      document.body.removeEventListener(`click`, clickFn);
+    });
+  };
+  document.body.addEventListener(`keydown`, keydownFn);
 };
 
 
 let closeMessage = function (type) {
-  return function () {
-    document.querySelector(`.` + type).remove();
-  };
+  console.log(type);
+  document.querySelector(`.` + type).remove();
 };
 
 form.addEventListener(`submit`, function (evt) {
