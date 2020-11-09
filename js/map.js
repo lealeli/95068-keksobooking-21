@@ -220,7 +220,7 @@ let onSuccess = function (adverts) {
   };
 };
 
-let avatarPreview = function (fileChooser, preview) {
+let preview = function (fileChooser, matchesFn) {
   fileChooser.addEventListener(`change`, function () {
     let file = fileChooser.files[0];
     let fileName = file.name.toLowerCase();
@@ -230,48 +230,35 @@ let avatarPreview = function (fileChooser, preview) {
     });
 
     if (matches) {
-      let reader = new FileReader();
-
-      reader.addEventListener(`load`, function () {
-        preview.src = reader.result;
-      });
-
-      reader.readAsDataURL(file);
+      matchesFn(file);
     }
   });
 };
 
-avatarPreview(fileChooserAvatar, previewAvatar);
+preview(fileChooserAvatar, function (file) {
+  let reader = new FileReader();
 
-let photoPreview = function (fileChooser, container) {
-
-  fileChooser.addEventListener(`change`, function () {
-    let file = fileChooser.files[0];
-    let fileName = file.name.toLowerCase();
-
-    let matches = FILE_TYPES.some(function (it) {
-      return fileName.endsWith(it);
-    });
-
-    if (matches) {
-
-      let img = document.createElement(`img`);
-      img.style.width = `100%`;
-      img.style.height = `auto`;
-
-      let reader = new FileReader();
-
-      reader.addEventListener(`load`, function () {
-        img.src = reader.result;
-      });
-      container.append(img);
-
-      reader.readAsDataURL(file);
-    }
+  reader.addEventListener(`load`, function () {
+    previewAvatar.src = reader.result;
   });
-};
 
-photoPreview(fileChooserPhoto, previewPhoto);
+  reader.readAsDataURL(file);
+});
+
+preview(fileChooserPhoto, function (file) {
+  let img = document.createElement(`img`);
+  img.style.width = `100%`;
+  img.style.height = `auto`;
+
+  let reader = new FileReader();
+
+  reader.addEventListener(`load`, function () {
+    img.src = reader.result;
+  });
+  previewPhoto.append(img);
+
+  reader.readAsDataURL(file);
+});
 
 window.ajax(`https://21.javascript.pages.academy/keksobooking/data`, `GET`, onSuccess, onError);
 
