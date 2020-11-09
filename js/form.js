@@ -7,15 +7,15 @@ window.formValidation = {
   compareRooms(roomNumber, capacity) {
     let paramRoom = Number(roomNumber.value);
     let paramCapacity = Number(capacity.value);
-    if ((paramRoom === window.util.ROOM_NUMBER.HUNDRED_ROOM) && (paramCapacity !== window.util.CAPACITY_NUMBER.NOT_GUEST)) {
+    if ((paramRoom === window.util.roomNumber.HUNDRED_ROOM) && (paramCapacity !== window.util.capacityNumber.NOT_GUEST)) {
       capacity.setCustomValidity(`Выберите не для гостей`);
       capacity.reportValidity();
     } else {
-      if ((paramRoom !== window.util.ROOM_NUMBER.HUNDRED_ROOM) && (paramCapacity === window.util.CAPACITY_NUMBER.NOT_GUEST)) {
+      if ((paramRoom !== window.util.roomNumber.HUNDRED_ROOM) && (paramCapacity === window.util.capacityNumber.NOT_GUEST)) {
         roomNumber.setCustomValidity(`Выберите 100 комнат`);
         roomNumber.reportValidity();
       } else {
-        if ((paramRoom === window.util.ROOM_NUMBER.HUNDRED_ROOM) && (paramCapacity === window.util.CAPACITY_NUMBER.NOT_GUEST)) {
+        if ((paramRoom === window.util.roomNumber.HUNDRED_ROOM) && (paramCapacity === window.util.capacityNumber.NOT_GUEST)) {
           capacity.setCustomValidity(``);
           roomNumber.setCustomValidity(``);
         } else {
@@ -39,22 +39,22 @@ window.formValidation = {
 
   typeHouseValidation(type, price) {
     switch (type.value) {
-      case window.util.HOUSING_TYPE.HOUSE:
+      case window.util.housingType.HOUSE:
         price.setAttribute(`min`, 5000);
         price.setAttribute(`placeholder`, 5000);
         type.reportValidity();
         break;
-      case window.util.HOUSING_TYPE.PALACE:
+      case window.util.housingType.PALACE:
         price.setAttribute(`min`, 10000);
         price.setAttribute(`placeholder`, 10000);
         type.reportValidity();
         break;
-      case window.util.HOUSING_TYPE.FLAT:
+      case window.util.housingType.FLAT:
         price.setAttribute(`min`, 1000);
         price.setAttribute(`placeholder`, 1000);
         type.reportValidity();
         break;
-      case window.util.HOUSING_TYPE.BUNGALOW:
+      case window.util.housingType.BUNGALOW:
         price.setAttribute(`min`, 0);
         price.setAttribute(`placeholder`, 0);
         type.reportValidity();

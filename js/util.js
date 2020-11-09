@@ -23,7 +23,7 @@ window.util = {
     lastTimeout = window.setTimeout(cb, DEBOUNCE_INTERVAL);
   },
 
-  HOUSING_TYPE: {
+  housingType: {
     HOUSE: `house`,
     PALACE: `palace`,
     FLAT: `flat`,
@@ -31,7 +31,7 @@ window.util = {
     ANY: `any`
   },
 
-  ROOM_NUMBER: {
+  roomNumber: {
     ONE_ROOM: 1,
     TWO_ROOM: 2,
     THREE_ROOM: 3,
@@ -39,7 +39,7 @@ window.util = {
     ANY: `any`
   },
 
-  CAPACITY_NUMBER: {
+  capacityNumber: {
     ONE_GUEST: 1,
     TWO_GUEST: 2,
     THREE_GUEST: 3,
@@ -47,7 +47,7 @@ window.util = {
     ANY: `any`
   },
 
-  SERVER_ANSWER: {
+  serverAnswer: {
     SUCCESS: 200,
     BAD_REQUEST: 400,
     NOT_AUTHORIZED: 401,
@@ -55,7 +55,7 @@ window.util = {
     TIMEOUT_SERVER: 10000
   },
 
-  HOUSING_PRICE: {
+  housingPrice: {
     LOW: `low`,
     MIDDLE: `middle`,
     HIGH: `high`,

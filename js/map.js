@@ -71,31 +71,31 @@ let onSuccess = function (adverts) {
     });
 
     let samePins = adverts.filter(function (advert) {
-      if (housingType !== window.util.HOUSING_TYPE.ANY) {
+      if (housingType !== window.util.housingType.ANY) {
         if (advert.offer.type !== housingType) {
           return false;
         }
       }
 
-      if (housingPrice !== window.util.HOUSING_PRICE.ANY) {
-        if ((housingPrice === window.util.HOUSING_PRICE.HIGH) && (advert.offer.price < PRICE_LEVEL_TWO)) {
+      if (housingPrice !== window.util.housingPrice.ANY) {
+        if ((housingPrice === window.util.housingPrice.HIGH) && (advert.offer.price < PRICE_LEVEL_TWO)) {
           return false;
         }
-        if ((housingPrice === window.util.HOUSING_PRICE.MIDDLE) && ((advert.offer.price >= PRICE_LEVEL_TWO) || (advert.offer.price < PRICE_LEVEL_ONE))) {
+        if ((housingPrice === window.util.housingPrice.MIDDLE) && ((advert.offer.price >= PRICE_LEVEL_TWO) || (advert.offer.price < PRICE_LEVEL_ONE))) {
           return false;
         }
-        if ((housingPrice === window.util.HOUSING_PRICE.LOW) && (advert.offer.price >= PRICE_LEVEL_ONE)) {
+        if ((housingPrice === window.util.housingPrice.LOW) && (advert.offer.price >= PRICE_LEVEL_ONE)) {
           return false;
         }
       }
 
-      if (roomNumber !== window.util.ROOM_NUMBER.ANY) {
+      if (roomNumber !== window.util.roomNumber.ANY) {
         if (advert.offer.rooms !== Number(roomNumber)) {
           return false;
         }
       }
 
-      if (capacityNumber !== window.util.ROOM_NUMBER.ANY) {
+      if (capacityNumber !== window.util.roomNumber.ANY) {
         if (advert.offer.guests !== Number(capacityNumber)) {
           return false;
         }
@@ -126,7 +126,7 @@ let onSuccess = function (adverts) {
     form.classList.remove(`ad-form--disabled`);
     formDisabled.forEach((element) => element.removeAttribute(`disabled`));
 
-    updatePin(window.util.HOUSING_TYPE.ANY, window.util.HOUSING_PRICE.ANY, window.util.ROOM_NUMBER.ANY, window.util.CAPACITY_NUMBER.ANY);
+    updatePin(window.util.housingType.ANY, window.util.housingPrice.ANY, window.util.roomNumber.ANY, window.util.capacityNumber.ANY);
   }
 
   for (let i = 0; i < mapFilters.length; i++) {

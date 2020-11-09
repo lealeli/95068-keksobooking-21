@@ -7,7 +7,7 @@ window.upload = function (data, onSuccess, onError) {
   xhr.responseType = `json`;
 
   xhr.addEventListener(`load`, function () {
-    if (xhr.status === window.util.SERVER_ANSWER.SUCCESS) {
+    if (xhr.status === window.util.serverAnswer.SUCCESS) {
       onSuccess();
       return;
     }
@@ -24,7 +24,7 @@ window.upload = function (data, onSuccess, onError) {
     onError();
   });
 
-  xhr.timeout = window.util.SERVER_ANSWER.TIMEOUT_SERVER; // 10s
+  xhr.timeout = window.util.serverAnswer.TIMEOUT_SERVER; // 10s
 
   xhr.open(`POST`, URL_UPLOAD);
   xhr.send(data);

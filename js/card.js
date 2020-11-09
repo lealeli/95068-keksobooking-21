@@ -44,16 +44,16 @@ window.card = {
 
     if (advert.offer.type) {
       switch (advert.offer.type) {
-        case window.util.HOUSING_TYPE.PALACE:
+        case window.util.housingType.PALACE:
           cardElement.querySelector(`.popup__type`).innerHTML = ARRAY_HOME.PALACE;
           break;
-        case window.util.HOUSING_TYPE.BUNGALOW:
+        case window.util.housingType.BUNGALOW:
           cardElement.querySelector(`.popup__type`).innerHTML = ARRAY_HOME.BUNGALOW;
           break;
-        case window.util.HOUSING_TYPE.FLAT:
+        case window.util.housingType.FLAT:
           cardElement.querySelector(`.popup__type`).innerHTML = ARRAY_HOME.FLAT;
           break;
-        case window.util.HOUSING_TYPE.HOUSE:
+        case window.util.housingType.HOUSE:
           cardElement.querySelector(`.popup__type`).innerHTML = ARRAY_HOME.HOUSE;
           break;
         default:

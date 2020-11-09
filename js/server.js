@@ -8,17 +8,17 @@ window.load = function (url, onSuccess, onError) {
   xhr.addEventListener(`load`, function () {
     let error;
     switch (xhr.status) {
-      case window.util.SERVER_ANSWER.SUCCESS:
+      case window.util.serverAnswer.SUCCESS:
         onSuccess(xhr.response);
         break;
 
-      case window.util.SERVER_ANSWER.BAD_REQUEST:
+      case window.util.serverAnswer.BAD_REQUEST:
         error = `Неверный запрос`;
         break;
-      case window.util.SERVER_ANSWER.NOT_AUTHORIZED:
+      case window.util.serverAnswer.NOT_AUTHORIZED:
         error = `Пользователь не авторизован`;
         break;
-      case window.util.SERVER_ANSWER.NOT_FOUND_ERROR:
+      case window.util.serverAnswer.NOT_FOUND_ERROR:
         error = `Ничего не найдено`;
         break;
 
@@ -39,7 +39,7 @@ window.load = function (url, onSuccess, onError) {
     onError(`Запрос не успел выполниться за ` + xhr.timeout + `мс`);
   });
 
-  xhr.timeout = window.util.SERVER_ANSWER.TIMEOUT_SERVER; // 10s
+  xhr.timeout = window.util.serverAnswer.TIMEOUT_SERVER; // 10s
 
   xhr.open(`GET`, url);
   xhr.send();
