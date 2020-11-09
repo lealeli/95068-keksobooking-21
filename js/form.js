@@ -2,6 +2,10 @@
 
 const PIN_WIDTH = 65;
 const PIN_HEIGHT = 75;
+const MIN_PRICE_BUNGALOW = 0;
+const MIN_PRICE_FLAT = 1000;
+const MIN_PRICE_HOUSE = 5000;
+const MIN_PRICE_PALACE = 10000;
 
 window.formValidation = {
   compareRooms(roomNumber, capacity) {
@@ -40,23 +44,23 @@ window.formValidation = {
   typeHouseValidation(type, price) {
     switch (type.value) {
       case window.util.housingType.HOUSE:
-        price.setAttribute(`min`, 5000);
-        price.setAttribute(`placeholder`, 5000);
+        price.setAttribute(`min`, MIN_PRICE_HOUSE);
+        price.setAttribute(`placeholder`, MIN_PRICE_HOUSE);
         type.reportValidity();
         break;
       case window.util.housingType.PALACE:
-        price.setAttribute(`min`, 10000);
-        price.setAttribute(`placeholder`, 10000);
+        price.setAttribute(`min`, MIN_PRICE_PALACE);
+        price.setAttribute(`placeholder`, MIN_PRICE_PALACE);
         type.reportValidity();
         break;
       case window.util.housingType.FLAT:
-        price.setAttribute(`min`, 1000);
-        price.setAttribute(`placeholder`, 1000);
+        price.setAttribute(`min`, MIN_PRICE_FLAT);
+        price.setAttribute(`placeholder`, MIN_PRICE_FLAT);
         type.reportValidity();
         break;
       case window.util.housingType.BUNGALOW:
-        price.setAttribute(`min`, 0);
-        price.setAttribute(`placeholder`, 0);
+        price.setAttribute(`min`, MIN_PRICE_BUNGALOW);
+        price.setAttribute(`placeholder`, MIN_PRICE_BUNGALOW);
         type.reportValidity();
         break;
       default:
