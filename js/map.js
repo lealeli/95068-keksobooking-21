@@ -6,6 +6,7 @@ const BODY_WIDHT = 1200;
 const HEIGHT_BEGIN = 130;
 const HEIGHT_END = 630;
 const PIN_HEIGHT = 75;
+const FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`];
 
 let pinMain = document.querySelector(`.map__pin--main`);
 let form = document.querySelector(`.ad-form`);
@@ -110,9 +111,9 @@ let onSuccess = function (adverts) {
 
     samePins = samePins.slice(0, 5);
 
-    let pins = window.pin.appendPin(samePins, pinListElement);
+    let pins = window.pin.append(samePins, pinListElement);
 
-    window.pin.eventClickPin(pins, samePins);
+    window.pin.eventClick(pins, samePins);
   };
 
   function unDisabledForm() {
@@ -220,8 +221,6 @@ let onSuccess = function (adverts) {
 };
 
 let avatarPreview = function (fileChooser, preview) {
-  const FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`];
-
   fileChooser.addEventListener(`change`, function () {
     let file = fileChooser.files[0];
     let fileName = file.name.toLowerCase();
@@ -245,7 +244,6 @@ let avatarPreview = function (fileChooser, preview) {
 avatarPreview(fileChooserAvatar, previewAvatar);
 
 let photoPreview = function (fileChooser, container) {
-  const FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`];
 
   fileChooser.addEventListener(`change`, function () {
     let file = fileChooser.files[0];
