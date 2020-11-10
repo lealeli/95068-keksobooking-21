@@ -11,46 +11,46 @@ const ARRAY_HOME = {
 const ARRAY_FEATURES = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
 const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
 
-const renderAvatar = (advert, cardElement) => {
+const renderAvatar = ({offer: {avatar}}, cardElement) => {
   const popupAvatar = cardElement.querySelector(`.popup__avatar`);
-  if (advert.author.avatar) {
-    popupAvatar.src = advert.author.avatar;
+  if (avatar) {
+    popupAvatar.src = avatar;
   } else {
     popupAvatar.remove();
   }
 };
 
-const renderTitle = (advert, cardElement) => {
+const renderTitle = ({offer: {title}}, cardElement) => {
   const popupTitle = cardElement.querySelector(`.popup__title`);
-  if (advert.offer.title) {
-    popupTitle.textContent = advert.offer.title;
+  if (title) {
+    popupTitle.textContent = title;
   } else {
     popupTitle.remove();
   }
 };
 
-const renderAddress = (advert, cardElement) => {
+const renderAddress = ({offer: {address}}, cardElement) => {
   const popupTextAddress = cardElement.querySelector(`.popup__text--address`);
-  if (advert.offer.address) {
-    popupTextAddress.textContent = advert.offer.address;
+  if (address) {
+    popupTextAddress.textContent = address;
   } else {
     popupTextAddress.remove();
   }
 };
 
-const renderPrice = (advert, cardElement) => {
+const renderPrice = ({offer: {price}}, cardElement) => {
   const popupTextPrice = cardElement.querySelector(`.popup__text--price`);
-  if (advert.offer.price) {
-    popupTextPrice.textContent = advert.offer.price + `₽/ночь`;
+  if (price) {
+    popupTextPrice.textContent = price + `₽/ночь`;
   } else {
     popupTextPrice.remove();
   }
 };
 
-const renderType = (advert, cardElement) => {
+const renderType = ({offer: {type}}, cardElement) => {
   const popupType = cardElement.querySelector(`.popup__type`);
-  if (advert.offer.type) {
-    switch (advert.offer.type) {
+  if (type) {
+    switch (type) {
       case window.util.housingType.PALACE:
         popupType.textContent = ARRAY_HOME.PALACE;
         break;
@@ -71,29 +71,29 @@ const renderType = (advert, cardElement) => {
   }
 };
 
-const renderCapacity = (advert, cardElement) => {
+const renderCapacity = ({offer: {rooms, guests}}, cardElement) => {
   const popupTextCapacity = cardElement.querySelector(`.popup__text--capacity`);
-  if (advert.offer.rooms && advert.offer.guests) {
-    popupTextCapacity.textContent = advert.offer.rooms + ` комнаты для ` + advert.offer.guests + ` гостей`;
+  if (rooms && guests) {
+    popupTextCapacity.textContent = rooms + ` комнаты для ` + guests + ` гостей`;
   } else {
     popupTextCapacity.remove();
   }
 };
 
-const renderTime = (advert, cardElement) => {
+const renderTime = ({offer: {checkin, checkout}}, cardElement) => {
   const popupTextTime = cardElement.querySelector(`.popup__text--time`);
-  if (advert.offer.checkin && advert.offer.checkout) {
-    popupTextTime.textContent = `Заезд после` + advert.offer.checkin + `, выезд до ` + advert.offer.checkout;
+  if (checkin && checkout) {
+    popupTextTime.textContent = `Заезд после` + checkin + `, выезд до ` + checkout;
   } else {
     popupTextTime.remove();
   }
 };
 
-const renderFeatures = (advert, cardElement) => {
+const renderFeatures = ({offer: {features}}, cardElement) => {
   const popupFeatures = cardElement.querySelector(`.popup__features`);
-  if (advert.offer.features) {
+  if (features) {
     ARRAY_FEATURES.forEach((element) => {
-      if (!advert.offer.features.some(function (value) {
+      if (!features.some(function (value) {
         return value === element;
       })) {
         popupFeatures.removeChild(cardElement.querySelector(`.popup__feature--` + element));
@@ -105,10 +105,10 @@ const renderFeatures = (advert, cardElement) => {
   }
 };
 
-const renderDescription = (advert, cardElement) => {
+const renderDescription = ({offer: {description}}, cardElement) => {
   const popupDescription = cardElement.querySelector(`.popup__description`);
-  if (advert.offer.description) {
-    popupDescription.textContent = advert.offer.description;
+  if (description) {
+    popupDescription.textContent = description;
   } else {
     popupDescription.remove();
   }
@@ -121,11 +121,11 @@ const renderPhoto = (ad, cardElement) => {
   return photo;
 };
 
-const renderCardPhoto = (advert, cardElement) => {
+const renderCardPhoto = ({offer: {photos}}, cardElement) => {
   const popupPhotos = cardElement.querySelector(`.popup__photos`);
-  if (advert.offer.photos) {
+  if (photos) {
     const fragment = document.createDocumentFragment();
-    advert.offer.photos.forEach((element) => fragment.appendChild(renderPhoto(element, cardElement)));
+    photos.forEach((element) => fragment.appendChild(renderPhoto(element, cardElement)));
     popupPhotos.appendChild(fragment);
     popupPhotos.removeChild(cardElement.querySelectorAll(`.popup__photo`)[0]);
   } else {
