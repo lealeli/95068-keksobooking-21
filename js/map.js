@@ -19,7 +19,7 @@ const previewAvatar = document.querySelector(`.ad-form-header__preview img`);
 const fileChooserPhoto = document.querySelector(`.ad-form__input`);
 const previewPhoto = document.querySelector(`.ad-form__photo`);
 
-const formResetState = function () {
+const formResetState = () => {
   const pinElements = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
 
   if (document.querySelector(`.map__card`)) {
@@ -43,7 +43,7 @@ const formResetState = function () {
   window.formValidation.addressValidation(addressInput, pinMain);
 };
 
-const onError = function (message) {
+const onError = (message) => {
   const node = document.createElement(`div`);
   node.style = `z-index: 100; margin: 40px auto; text-align: center; background-color: #ff5635; color: white; width: 200px; height: auto; padding: 50px;`;
   node.style.position = `absolute`;
@@ -55,10 +55,10 @@ const onError = function (message) {
   document.body.insertAdjacentElement(`afterbegin`, node);
 };
 
-const onSuccess = function (adverts) {
+const onSuccess = (adverts) => {
   formResetState();
 
-  const updatePin = function (housingType, housingPrice, roomNumber, capacityNumber) {
+  const updatePin = (housingType, housingPrice, roomNumber, capacityNumber) => {
 
     const pinElements = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
     pinElements.forEach((element) => element.remove());
@@ -71,7 +71,7 @@ const onSuccess = function (adverts) {
       }
     });
 
-    let samePins = adverts.filter(function (advert) {
+    let samePins = adverts.filter((advert) => {
       if (housingType !== window.util.housingType.ANY) {
         if (advert.offer.type !== housingType) {
           return false;
@@ -116,7 +116,7 @@ const onSuccess = function (adverts) {
     window.pin.eventClick(pins, samePins);
   };
 
-  function unDisabledForm() {
+  const unDisabledForm = () => {
     if (!document.querySelector(`.map--faded`)) {
       return;
     }
@@ -128,7 +128,7 @@ const onSuccess = function (adverts) {
     formDisabled.forEach((element) => element.removeAttribute(`disabled`));
 
     updatePin(window.util.housingType.ANY, window.util.housingPrice.ANY, window.util.roomNumber.ANY, window.util.capacityNumber.ANY);
-  }
+  };
 
   for (let i = 0; i < mapFilters.length; i++) {
     mapFilters[i].addEventListener(`change`, function () {
@@ -154,7 +154,7 @@ const onSuccess = function (adverts) {
   let shiftY;
   let mouseMoveFlag = false;
 
-  function moveAt(pageX, pageY) {
+  const moveAt = (pageX, pageY) => {
     const viewWidht = document.documentElement.clientWidth;
     const beginX = (viewWidht - BODY_WIDHT) / 2;
     const endX = viewWidht - (viewWidht - BODY_WIDHT) / 2 - pinMain.getBoundingClientRect().width;
@@ -187,7 +187,7 @@ const onSuccess = function (adverts) {
     }
 
     window.formValidation.addressValidationActive(addressInput, pinMain);
-  }
+  };
 
   pinMain.onmousedown = function (event) {
 
@@ -205,9 +205,9 @@ const onSuccess = function (adverts) {
 
   };
 
-  function onMouseMove(ev) {
+  const onMouseMove = (ev) => {
     moveAt(ev.pageX, ev.pageY);
-  }
+  };
 
   document.addEventListener(`mousemove`, onMouseMove);
 
@@ -215,12 +215,12 @@ const onSuccess = function (adverts) {
     mouseMoveFlag = false;
   });
 
-  pinMain.ondragstart = function () {
+  pinMain.ondragstart = () => {
     return false;
   };
 };
 
-const preview = function (fileChooser, matchesFn) {
+const preview = (fileChooser, matchesFn) => {
   fileChooser.addEventListener(`change`, function () {
     const file = fileChooser.files[0];
     const fileName = file.name.toLowerCase();
@@ -262,7 +262,7 @@ preview(fileChooserPhoto, function (file) {
 
 window.ajax(`https://21.javascript.pages.academy/keksobooking/data`, `GET`, onSuccess, onError);
 
-const sendForm = function (type) {
+const sendForm = (type) => {
   const errorTemplate = document.querySelector(`#` + type).content.querySelector(`.` + type);
   const errorElement = errorTemplate.cloneNode(true);
   const fragment = document.createDocumentFragment();
@@ -270,14 +270,14 @@ const sendForm = function (type) {
   fragment.appendChild(errorElement);
   document.body.appendChild(fragment);
 
-  const clickFn = function () {
+  const clickFn = () => {
     closeMessage(type);
     document.body.removeEventListener(`keydown`, keydownFn);
     document.body.removeEventListener(`click`, clickFn);
   };
   document.body.addEventListener(`click`, clickFn);
 
-  const keydownFn = function (evt) {
+  const keydownFn = (evt) => {
     window.util.isEscEvent(evt, function () {
       closeMessage(type);
       document.body.removeEventListener(`keydown`, keydownFn);
@@ -288,7 +288,7 @@ const sendForm = function (type) {
 };
 
 
-const closeMessage = function (type) {
+const closeMessage = (type) => {
   document.querySelector(`.` + type).remove();
 };
 

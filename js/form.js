@@ -8,7 +8,7 @@ const MIN_PRICE_HOUSE = 5000;
 const MIN_PRICE_PALACE = 10000;
 
 window.formValidation = {
-  compareRooms(roomNumber, capacity) {
+  compareRooms: (roomNumber, capacity) => {
     const paramRoom = Number(roomNumber.value);
     const paramCapacity = Number(capacity.value);
     if ((paramRoom === window.util.roomNumber.HUNDRED_ROOM) && (paramCapacity !== window.util.capacityNumber.NOT_GUEST)) {
@@ -35,13 +35,13 @@ window.formValidation = {
     }
   },
 
-  timeValidation(timeChange, timeStay) {
+  timeValidation: (timeChange, timeStay) => {
     if (timeChange.value !== timeStay.value) {
       timeStay.value = timeChange.value;
     }
   },
 
-  typeHouseValidation(type, price) {
+  typeHouseValidation: (type, price) => {
     switch (type.value) {
       case window.util.housingType.HOUSE:
         price.setAttribute(`min`, MIN_PRICE_HOUSE);
@@ -68,11 +68,11 @@ window.formValidation = {
     }
   },
 
-  addressValidation(addressInput, pinMain) {
+  addressValidation: (addressInput, pinMain) => {
     addressInput[0].value = Math.round(PIN_WIDTH / 2 + pinMain.offsetLeft) + `, ` + Math.round(PIN_WIDTH / 2 + pinMain.offsetTop);
   },
 
-  addressValidationActive(addressInput, pinMain) {
+  addressValidationActive: (addressInput, pinMain) => {
     addressInput[0].value = Math.round(PIN_WIDTH / 2 + pinMain.offsetLeft) + `, ` + Math.round(PIN_HEIGHT + pinMain.offsetTop);
   }
 };

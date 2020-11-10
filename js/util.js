@@ -5,13 +5,13 @@ const DEBOUNCE_INTERVAL = 500;
 let lastTimeout;
 
 window.util = {
-  isEscEvent(evt, action) {
+  isEscEvent: (evt, action) => {
     if (evt.key === ESC_KEY) {
       action();
     }
   },
 
-  debounce(cb) {
+  debounce: (cb) => {
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);
     }

@@ -4,7 +4,7 @@ const PIN_WIDTH = 50;
 const PIN_HEIGHT = 70;
 
 window.pin = {
-  render(advert) {
+  render: (advert) => {
     const mapPinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
     const pinElement = mapPinTemplate.cloneNode(true);
 
@@ -16,7 +16,7 @@ window.pin = {
     return pinElement;
   },
 
-  append(adverts, pinList) {
+  append: (adverts, pinList) => {
     const pinArrays = [];
     const fragment = document.createDocumentFragment();
     adverts.forEach(function (element) {
@@ -29,7 +29,7 @@ window.pin = {
     return pinArrays;
   },
 
-  eventClick(pinElements, adverts) {
+  eventClick: (pinElements, adverts) => {
     pinElements.forEach((elementI, i) => elementI.addEventListener(`click`, function () {
       pinElements.forEach((elementJ, j) => {
         if (i === j) {

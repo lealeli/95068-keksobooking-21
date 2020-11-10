@@ -1,6 +1,6 @@
 'use strict';
 
-window.ajax = function (url, method, onSuccess, onError, data) {
+window.ajax = (url, method, onSuccess, onError, data) => {
   const xhr = new XMLHttpRequest();
 
   xhr.responseType = `json`;
@@ -31,11 +31,11 @@ window.ajax = function (url, method, onSuccess, onError, data) {
     }
   });
 
-  xhr.addEventListener(`error`, function () {
+  xhr.addEventListener(`error`, () => {
     onError(`Произошла ошибка соединения`);
   });
 
-  xhr.addEventListener(`timeout`, function () {
+  xhr.addEventListener(`timeout`, () => {
     onError(`Запрос не успел выполниться за ` + xhr.timeout + `мс`);
   });
 
