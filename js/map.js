@@ -7,20 +7,21 @@ const HEIGHT_BEGIN = 130;
 const HEIGHT_END = 630;
 const PIN_HEIGHT = 75;
 const FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`];
+const pinMain = document.querySelector(`.map__pin--main`);
+const form = document.querySelector(`.ad-form`);
+const formDisabled = document.querySelectorAll(`.ad-form--disabled fieldset`);
+const mapFilters = document.querySelector(`.map__filters`).children;
+const addressInput = document.getElementsByName(`address`);
+const buttonReset = document.querySelector(`.ad-form__reset`);
+const pinListElement = document.querySelector(`.map__pins`);
+const fileChooserAvatar = document.querySelector(`.ad-form-header__input`);
+const previewAvatar = document.querySelector(`.ad-form-header__preview img`);
+const fileChooserPhoto = document.querySelector(`.ad-form__input`);
+const previewPhoto = document.querySelector(`.ad-form__photo`);
 
-let pinMain = document.querySelector(`.map__pin--main`);
-let form = document.querySelector(`.ad-form`);
-let formDisabled = document.querySelectorAll(`.ad-form--disabled fieldset`);
-let mapFilters = document.querySelector(`.map__filters`).children;
-let addressInput = document.getElementsByName(`address`);
-let buttonReset = document.querySelector(`.ad-form__reset`);
-let pinListElement = document.querySelector(`.map__pins`);
-let fileChooserAvatar = document.querySelector(`.ad-form-header__input`);
-let previewAvatar = document.querySelector(`.ad-form-header__preview img`);
-let fileChooserPhoto = document.querySelector(`.ad-form__input`);
-let previewPhoto = document.querySelector(`.ad-form__photo`);
+const formResetState = function () {
+  const pinElements = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
 
-let formResetState = function () {
   if (document.querySelector(`.map__card`)) {
     document.querySelector(`.map__card`).remove();
   }
@@ -35,7 +36,6 @@ let formResetState = function () {
 
   document.querySelector(`.map`).classList.add(`map--faded`);
   form.classList.add(`ad-form--disabled`);
-  let pinElements = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
   pinElements.forEach((element) => element.remove());
   pinListElement.append(pinMain);
   pinMain.style.left = `570px`;
@@ -43,8 +43,8 @@ let formResetState = function () {
   window.formValidation.addressValidation(addressInput, pinMain);
 };
 
-let onError = function (message) {
-  let node = document.createElement(`div`);
+const onError = function (message) {
+  const node = document.createElement(`div`);
   node.style = `z-index: 100; margin: 40px auto; text-align: center; background-color: #ff5635; color: white; width: 200px; height: auto; padding: 50px;`;
   node.style.position = `absolute`;
   node.style.left = 0;
@@ -55,15 +55,15 @@ let onError = function (message) {
   document.body.insertAdjacentElement(`afterbegin`, node);
 };
 
-let onSuccess = function (adverts) {
+const onSuccess = function (adverts) {
   formResetState();
 
   const updatePin = function (housingType, housingPrice, roomNumber, capacityNumber) {
 
-    let pinElements = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+    const pinElements = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
     pinElements.forEach((element) => element.remove());
 
-    let housingFeatures = [];
+    const housingFeatures = [];
 
     document.querySelectorAll(`#housing-features > .map__checkbox`).forEach(function (element) {
       if (element.checked) {
@@ -111,7 +111,7 @@ let onSuccess = function (adverts) {
 
     samePins = samePins.slice(0, 5);
 
-    let pins = window.pin.append(samePins, pinListElement);
+    const pins = window.pin.append(samePins, pinListElement);
 
     window.pin.eventClick(pins, samePins);
   };
@@ -155,9 +155,9 @@ let onSuccess = function (adverts) {
   let mouseMoveFlag = false;
 
   function moveAt(pageX, pageY) {
-    let viewWidht = document.documentElement.clientWidth;
-    let beginX = (viewWidht - BODY_WIDHT) / 2;
-    let endX = viewWidht - (viewWidht - BODY_WIDHT) / 2 - pinMain.getBoundingClientRect().width;
+    const viewWidht = document.documentElement.clientWidth;
+    const beginX = (viewWidht - BODY_WIDHT) / 2;
+    const endX = viewWidht - (viewWidht - BODY_WIDHT) / 2 - pinMain.getBoundingClientRect().width;
 
     if ((pageX + shiftX <= beginX) || (pageX - shiftX >= endX) || (pageY + shiftY <= HEIGHT_BEGIN) || (pageY - shiftY >= HEIGHT_END)) {
       mouseMoveFlag = false;
@@ -220,12 +220,12 @@ let onSuccess = function (adverts) {
   };
 };
 
-let preview = function (fileChooser, matchesFn) {
+const preview = function (fileChooser, matchesFn) {
   fileChooser.addEventListener(`change`, function () {
-    let file = fileChooser.files[0];
-    let fileName = file.name.toLowerCase();
+    const file = fileChooser.files[0];
+    const fileName = file.name.toLowerCase();
 
-    let matches = FILE_TYPES.some(function (it) {
+    const matches = FILE_TYPES.some(function (it) {
       return fileName.endsWith(it);
     });
 
@@ -236,7 +236,7 @@ let preview = function (fileChooser, matchesFn) {
 };
 
 preview(fileChooserAvatar, function (file) {
-  let reader = new FileReader();
+  const reader = new FileReader();
 
   reader.addEventListener(`load`, function () {
     previewAvatar.src = reader.result;
@@ -246,11 +246,11 @@ preview(fileChooserAvatar, function (file) {
 });
 
 preview(fileChooserPhoto, function (file) {
-  let img = document.createElement(`img`);
+  const img = document.createElement(`img`);
+  const reader = new FileReader();
+
   img.style.width = `100%`;
   img.style.height = `auto`;
-
-  let reader = new FileReader();
 
   reader.addEventListener(`load`, function () {
     img.src = reader.result;
@@ -262,22 +262,22 @@ preview(fileChooserPhoto, function (file) {
 
 window.ajax(`https://21.javascript.pages.academy/keksobooking/data`, `GET`, onSuccess, onError);
 
-let sendForm = function (type) {
-  let errorTemplate = document.querySelector(`#` + type).content.querySelector(`.` + type);
-  let errorElement = errorTemplate.cloneNode(true);
-  let fragment = document.createDocumentFragment();
+const sendForm = function (type) {
+  const errorTemplate = document.querySelector(`#` + type).content.querySelector(`.` + type);
+  const errorElement = errorTemplate.cloneNode(true);
+  const fragment = document.createDocumentFragment();
 
   fragment.appendChild(errorElement);
   document.body.appendChild(fragment);
 
-  let clickFn = function () {
+  const clickFn = function () {
     closeMessage(type);
     document.body.removeEventListener(`keydown`, keydownFn);
     document.body.removeEventListener(`click`, clickFn);
   };
   document.body.addEventListener(`click`, clickFn);
 
-  let keydownFn = function (evt) {
+  const keydownFn = function (evt) {
     window.util.isEscEvent(evt, function () {
       closeMessage(type);
       document.body.removeEventListener(`keydown`, keydownFn);
@@ -288,8 +288,7 @@ let sendForm = function (type) {
 };
 
 
-let closeMessage = function (type) {
-  console.log(type);
+const closeMessage = function (type) {
   document.querySelector(`.` + type).remove();
 };
 

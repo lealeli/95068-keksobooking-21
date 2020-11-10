@@ -1,13 +1,13 @@
 'use strict';
 
-let pinMain = document.querySelector(`.map__pin--main`);
-let addressInput = document.getElementsByName(`address`);
-let roomNumber = document.getElementById(`room_number`);
-let capacity = document.getElementById(`capacity`);
-let timeIn = document.getElementById(`timein`);
-let timeOut = document.getElementById(`timeout`);
-let price = document.getElementById(`price`);
-let type = document.getElementById(`type`);
+const pinMain = document.querySelector(`.map__pin--main`);
+const addressInput = document.getElementsByName(`address`);
+const roomNumber = document.getElementById(`room_number`);
+const capacity = document.getElementById(`capacity`);
+const timeIn = document.getElementById(`timein`);
+const timeOut = document.getElementById(`timeout`);
+const price = document.getElementById(`price`);
+const type = document.getElementById(`type`);
 
 window.formValidation.addressValidation(addressInput, pinMain);
 window.formValidation.compareRooms(roomNumber, capacity);

@@ -9,8 +9,8 @@ const MIN_PRICE_PALACE = 10000;
 
 window.formValidation = {
   compareRooms(roomNumber, capacity) {
-    let paramRoom = Number(roomNumber.value);
-    let paramCapacity = Number(capacity.value);
+    const paramRoom = Number(roomNumber.value);
+    const paramCapacity = Number(capacity.value);
     if ((paramRoom === window.util.roomNumber.HUNDRED_ROOM) && (paramCapacity !== window.util.capacityNumber.NOT_GUEST)) {
       capacity.setCustomValidity(`Выберите не для гостей`);
       capacity.reportValidity();
