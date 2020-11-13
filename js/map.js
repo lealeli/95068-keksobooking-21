@@ -65,7 +65,7 @@ const onSuccess = (adverts) => {
 
     const housingFeatures = [];
 
-    document.querySelectorAll(`#housing-features > .map__checkbox`).forEach(function (element) {
+    document.querySelectorAll(`#housing-features > .map__checkbox`).forEach((element) => {
       if (element.checked) {
         housingFeatures.push(element.value);
       }
@@ -131,19 +131,19 @@ const onSuccess = (adverts) => {
   };
 
   for (let i = 0; i < mapFilters.length; i++) {
-    mapFilters[i].addEventListener(`change`, function () {
+    mapFilters[i].addEventListener(`change`, () => {
       const pinCard = document.querySelector(`.map__card`);
       if (pinCard) {
         pinCard.remove();
       }
 
-      window.util.debounce(function () {
+      window.util.debounce(() => {
         updatePin(mapFilters[0].value, mapFilters[1].value, mapFilters[2].value, mapFilters[3].value);
       });
     });
   }
 
-  pinMain.addEventListener(`keydown`, function (evt) {
+  pinMain.addEventListener(`keydown`, (evt) => {
     if (evt.key === `Enter`) {
       unDisabledForm();
       window.formValidation.addressValidationActive(addressInput, pinMain);
@@ -189,7 +189,7 @@ const onSuccess = (adverts) => {
     window.formValidation.addressValidationActive(addressInput, pinMain);
   };
 
-  pinMain.onmousedown = function (event) {
+  pinMain.onmousedown = (event) => {
 
     if (event.button !== 0) {
       return;
@@ -211,7 +211,7 @@ const onSuccess = (adverts) => {
 
   document.addEventListener(`mousemove`, onMouseMove);
 
-  pinMain.addEventListener(`mouseup`, function () {
+  pinMain.addEventListener(`mouseup`, () => {
     mouseMoveFlag = false;
   });
 
@@ -221,11 +221,11 @@ const onSuccess = (adverts) => {
 };
 
 const preview = (fileChooser, matchesFn) => {
-  fileChooser.addEventListener(`change`, function () {
+  fileChooser.addEventListener(`change`, () => {
     const file = fileChooser.files[0];
     const fileName = file.name.toLowerCase();
 
-    const matches = FILE_TYPES.some(function (it) {
+    const matches = FILE_TYPES.some((it) => {
       return fileName.endsWith(it);
     });
 
@@ -235,24 +235,24 @@ const preview = (fileChooser, matchesFn) => {
   });
 };
 
-preview(fileChooserAvatar, function (file) {
+preview(fileChooserAvatar, (file) => {
   const reader = new FileReader();
 
-  reader.addEventListener(`load`, function () {
+  reader.addEventListener(`load`, () => {
     previewAvatar.src = reader.result;
   });
 
   reader.readAsDataURL(file);
 });
 
-preview(fileChooserPhoto, function (file) {
+preview(fileChooserPhoto, (file) => {
   const img = document.createElement(`img`);
   const reader = new FileReader();
 
   img.style.width = `100%`;
   img.style.height = `auto`;
 
-  reader.addEventListener(`load`, function () {
+  reader.addEventListener(`load`, () => {
     img.src = reader.result;
   });
   previewPhoto.append(img);
@@ -270,21 +270,21 @@ const sendForm = (type) => {
   fragment.appendChild(errorElement);
   document.body.appendChild(fragment);
 
-  const clickFn = () => {
+  const onPopupClick = () => {
     closeMessage(type);
-    document.body.removeEventListener(`keydown`, keydownFn);
-    document.body.removeEventListener(`click`, clickFn);
+    document.body.removeEventListener(`keydown`, onPopupEscPress);
+    document.body.removeEventListener(`click`, onPopupClick);
   };
-  document.body.addEventListener(`click`, clickFn);
+  document.body.addEventListener(`click`, onPopupClick);
 
-  const keydownFn = (evt) => {
-    window.util.isEscEvent(evt, function () {
+  const onPopupEscPress = (evt) => {
+    window.util.isEscEvent(evt, () => {
       closeMessage(type);
-      document.body.removeEventListener(`keydown`, keydownFn);
-      document.body.removeEventListener(`click`, clickFn);
+      document.body.removeEventListener(`keydown`, onPopupEscPress);
+      document.body.removeEventListener(`click`, onPopupClick);
     });
   };
-  document.body.addEventListener(`keydown`, keydownFn);
+  document.body.addEventListener(`keydown`, onPopupEscPress);
 };
 
 
@@ -292,18 +292,18 @@ const closeMessage = (type) => {
   document.querySelector(`.` + type).remove();
 };
 
-form.addEventListener(`submit`, function (evt) {
-  window.ajax(`https://21.javascript.pages.academy/keksobooking`, `POST`, function () {
+form.addEventListener(`submit`, (evt) => {
+  window.ajax(`https://21.javascript.pages.academy/keksobooking`, `POST`, () => {
     form.reset();
     formResetState();
     sendForm(`success`);
-  }, function () {
+  }, () => {
     sendForm(`error`);
   }, new FormData(form));
   evt.preventDefault();
 });
 
-buttonReset.addEventListener(`click`, function (event) {
+buttonReset.addEventListener(`click`, (event) => {
   form.reset();
   formResetState();
   event.preventDefault();

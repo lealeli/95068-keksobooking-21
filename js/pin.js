@@ -19,7 +19,7 @@ window.pin = {
   append: (adverts, pinList) => {
     const pinArrays = [];
     const fragment = document.createDocumentFragment();
-    adverts.forEach(function (element) {
+    adverts.forEach((element) => {
       const pin = window.pin.render(element);
       fragment.appendChild(pin);
       pinArrays.push(pin);
@@ -30,7 +30,7 @@ window.pin = {
   },
 
   eventClick: (pinElements, adverts) => {
-    pinElements.forEach((elementI, i) => elementI.addEventListener(`click`, function () {
+    pinElements.forEach((elementI, i) => elementI.addEventListener(`click`, () => {
       pinElements.forEach((elementJ, j) => {
         if (i === j) {
           elementJ.classList.add(`.map__pin--active`);

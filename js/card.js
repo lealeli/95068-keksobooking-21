@@ -93,7 +93,7 @@ const renderFeatures = ({offer: {features}}, cardElement) => {
   const popupFeatures = cardElement.querySelector(`.popup__features`);
   if (features) {
     ARRAY_FEATURES.forEach((element) => {
-      if (!features.some(function (value) {
+      if (!features.some((value) => {
         return value === element;
       })) {
         popupFeatures.removeChild(cardElement.querySelector(`.popup__feature--` + element));
@@ -162,12 +162,12 @@ window.card = {
   },
 
   closeCard: (element) => {
-    element.querySelector(`.popup__close`).addEventListener(`click`, function () {
+    element.querySelector(`.popup__close`).addEventListener(`click`, () => {
       element.remove();
     });
 
-    document.body.addEventListener(`keydown`, function (evt) {
-      window.util.isEscEvent(evt, function () {
+    document.body.addEventListener(`keydown`, (evt) => {
+      window.util.isEscEvent(evt, () => {
         element.remove();
       });
     });

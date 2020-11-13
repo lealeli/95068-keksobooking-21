@@ -5,7 +5,7 @@ window.ajax = (url, method, onSuccess, onError, data) => {
 
   xhr.responseType = `json`;
 
-  xhr.addEventListener(`load`, function () {
+  xhr.addEventListener(`load`, () => {
     let error;
     switch (xhr.status) {
       case window.util.serverAnswer.SUCCESS:
@@ -42,6 +42,10 @@ window.ajax = (url, method, onSuccess, onError, data) => {
   xhr.timeout = window.util.serverAnswer.TIMEOUT_SERVER; // 10s
 
   xhr.open(method, url);
-  xhr.send(data);
+  if (data) {
+    xhr.send(data);
+  } else {
+    xhr.send();
+  }
 };
 

@@ -14,23 +14,23 @@ window.formValidation.compareRooms(roomNumber, capacity);
 window.formValidation.timeValidation(timeIn, timeOut);
 window.formValidation.typeHouseValidation(type, price);
 
-roomNumber.addEventListener(`change`, function () {
+roomNumber.addEventListener(`change`, () => {
   window.formValidation.compareRooms(roomNumber, capacity);
 });
 
-capacity.addEventListener(`change`, function () {
+capacity.addEventListener(`change`, () => {
   window.formValidation.compareRooms(roomNumber, capacity);
 });
 
-timeIn.addEventListener(`change`, function () {
+timeIn.addEventListener(`change`, () => {
   window.formValidation.timeValidation(timeIn, timeOut);
 });
 
-timeOut.addEventListener(`change`, function () {
+timeOut.addEventListener(`change`, () => {
   window.formValidation.timeValidation(timeOut, timeIn);
 });
 
-type.addEventListener(`change`, function () {
+type.addEventListener(`change`, () => {
   window.formValidation.typeHouseValidation(type, price);
 });
 
